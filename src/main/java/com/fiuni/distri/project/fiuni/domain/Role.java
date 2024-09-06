@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Roles")
@@ -19,8 +22,15 @@ public class Role implements BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "Roles_id_seq")
-    private Long id;
+    private int id;
 
     @Column(nullable = false, unique = true)
-    private String nombre;
+    private String rol;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

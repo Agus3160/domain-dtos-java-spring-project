@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Evaluacion")
@@ -21,10 +24,10 @@ public class Evaluacion implements BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(nullable = false)
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @Column(nullable = false)
     private String descripcion;
@@ -34,8 +37,15 @@ public class Evaluacion implements BaseDomain {
     private Empleado empleado;
 
     @Column(nullable = false)
-    private BigDecimal puntajeGeneral;
+    private BigDecimal puntaje_general;
 
     @Column(nullable = false)
     private Boolean pendiente;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

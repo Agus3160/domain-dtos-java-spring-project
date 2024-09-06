@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "EvaluacionDetalle")
@@ -19,18 +22,25 @@ public class EvaluacionDetalle implements BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(nullable = false)
-    private Long criterio;
+    private String criterio;
 
     @Column(nullable = false)
-    private Long puntaje;
+    private int puntaje;
 
     @Column(nullable = false)
-    private Long comentarios;
+    private String comentarios;
 
     @ManyToOne
     @JoinColumn(name = "evaluacion_id", nullable = false)
     private Evaluacion evaluacion;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

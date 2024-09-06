@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Beneficios")
@@ -20,11 +23,11 @@ public class Beneficio implements BaseDomain {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Beneficios_id_seq")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Column(nullable = false)
-    private BigDecimal porcentajeDeSueldo;
+    private BigDecimal porcentaje_de_sueldo;
 
     @Column(nullable = false)
     private String nombre;
@@ -33,8 +36,15 @@ public class Beneficio implements BaseDomain {
     private Boolean activo;
 
     @Column(nullable = false)
-    private LocalDate fechaInit;
+    private LocalDate fecha_inicio;
 
     @Column(nullable = false)
-    private LocalDate fechaFin;
+    private LocalDate fecha_fin;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

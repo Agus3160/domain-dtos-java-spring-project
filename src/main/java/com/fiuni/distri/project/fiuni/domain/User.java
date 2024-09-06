@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Users")
@@ -19,7 +22,7 @@ public class User implements BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(nullable = false)
     private String password;
@@ -30,4 +33,11 @@ public class User implements BaseDomain {
     @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
     private Role role;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
