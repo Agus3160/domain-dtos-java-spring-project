@@ -21,8 +21,11 @@ public class User implements BaseDomain {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -30,7 +33,7 @@ public class User implements BaseDomain {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "rol_id", nullable = false)
     private Role role;
 
@@ -40,4 +43,7 @@ public class User implements BaseDomain {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 }

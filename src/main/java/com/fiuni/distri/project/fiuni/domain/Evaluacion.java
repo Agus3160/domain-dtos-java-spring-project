@@ -23,7 +23,7 @@ public class Evaluacion implements BaseDomain {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
@@ -32,7 +32,7 @@ public class Evaluacion implements BaseDomain {
     @Column(nullable = false)
     private String descripcion;
 
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "empleado_id", nullable = false)
     private Empleado empleado;
 
@@ -48,4 +48,7 @@ public class Evaluacion implements BaseDomain {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 }

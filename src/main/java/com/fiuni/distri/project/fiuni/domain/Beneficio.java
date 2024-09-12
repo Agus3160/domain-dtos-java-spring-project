@@ -23,7 +23,7 @@ public class Beneficio implements BaseDomain {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
@@ -36,10 +36,10 @@ public class Beneficio implements BaseDomain {
     private Boolean activo;
 
     @Column(nullable = false)
-    private LocalDate fecha_inicio;
+    private LocalDateTime fecha_inicio;
 
     @Column(nullable = false)
-    private LocalDate fecha_fin;
+    private LocalDateTime fecha_fin;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -47,4 +47,6 @@ public class Beneficio implements BaseDomain {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-}
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;}
