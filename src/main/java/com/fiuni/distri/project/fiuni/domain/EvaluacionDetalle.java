@@ -33,7 +33,7 @@ public class EvaluacionDetalle implements BaseDomain {
     @Column(nullable = false)
     private String comentarios;
 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "evaluacion_id", nullable = false)
     private Evaluacion evaluacion;
 

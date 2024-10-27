@@ -6,16 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements BaseDomain {
+public class User implements BaseDomain, UserDetails {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -33,9 +38,12 @@ public class User implements BaseDomain {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "rol_id", nullable = false)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<Role> roles;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -46,4 +54,11 @@ public class User implements BaseDomain {
 
     @Column(nullable = true)
     private LocalDateTime deletedAt;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> (GrantedAuthority) role::getRol)
+                .toList();
+    }
 }

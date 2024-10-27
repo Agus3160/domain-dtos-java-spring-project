@@ -9,8 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Beneficios")
@@ -49,4 +49,8 @@ public class Beneficio implements BaseDomain {
     private LocalDateTime updatedAt;
 
     @Column(nullable = true)
-    private LocalDateTime deletedAt;}
+    private LocalDateTime deletedAt;
+
+    @OneToMany(mappedBy = "beneficio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BeneficioDetalle> detalles;
+}

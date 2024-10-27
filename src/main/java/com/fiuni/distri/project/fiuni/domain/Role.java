@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role implements BaseDomain {
+public class Role implements BaseDomain, GrantedAuthority {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -36,4 +37,9 @@ public class Role implements BaseDomain {
 
     @Column(nullable = true)
     private LocalDateTime deletedAt;
+
+    @Override
+    public String getAuthority() {
+        return this.getRol();
+    }
 }

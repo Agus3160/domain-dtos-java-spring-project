@@ -28,11 +28,11 @@ public class BeneficioDetalle implements BaseDomain {
     @Column(nullable = false)
     private BigDecimal monto;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade={ CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "empleado_id", nullable = false)
     private Empleado empleado;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade={ CascadeType.REMOVE})
     @JoinColumn(name = "beneficio_id", nullable = false)
     private Beneficio beneficio;
 
